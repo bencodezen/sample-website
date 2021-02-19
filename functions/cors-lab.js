@@ -1,18 +1,20 @@
 // Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
 const handler = async event => {
   console.log('--------', event)
+  const headersOptions = {
+    'Access-Control-Allow-Origin': event.headers.origin,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers':
+      'Authorization, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, x-test'
+  }
+
   if (event.httpMethod === 'OPTIONS') {
     const netlifyDomainRegex = /netlify.app$/
 
     if (netlifyDomainRegex.test(event.headers.origin)) {
       return {
         statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': event.headers.origin,
-          'Access-Control-Allow-Methods': 'POST, OPTIONS',
-          'Access-Control-Allow-Headers':
-            'Authorization, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, x-test'
-        }
+        headers: headersOptions
       }
     }
   }
@@ -21,6 +23,7 @@ const handler = async event => {
     const subject = event.queryStringParameters.name || 'World'
     return {
       statusCode: 200,
+      headers: headersOptions,
       body: JSON.stringify({
         message: `Hello World`
       })
