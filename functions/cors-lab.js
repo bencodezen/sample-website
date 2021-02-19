@@ -9,7 +9,7 @@ const handler = async event => {
       body: JSON.stringify({
         message: `Hello World`,
         headers: {
-          'Access-Control-Allow-Origin': event.headers.origin,
+          'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'POST, OPTIONS',
           'Access-Control-Allow-Headers':
             'Authorization, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
